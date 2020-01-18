@@ -1,6 +1,6 @@
-====================================================================================================================================================================================================
+=======
 PROJETO
-====================================================================================================================================================================================================
+=======
 
 O objetivo do projeto é criar um sistema de pedidos de produtos.
 O programa pedirá o nome de um arquivo binário no começo do programa que estará guardado os produtos disponíveis no estoque.
@@ -33,9 +33,9 @@ A opção (L)istar mostra uma lista com os produtos do estoque, exibindo seu nom
 
 A opção (S)air salvará os dados dentro do vetor dinâmico no arquivo binário do estoque que só poderá ser modificado neste momento.
 
-====================================================================================================================================================================================================
+====================
 ESTRUTURA DO PROJETO
-====================================================================================================================================================================================================
+====================
 
 Biblioteca Vetor - biblioteca que comportará as funções que serão responsáveis por modificar o vetor.
 

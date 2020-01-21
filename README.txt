@@ -41,7 +41,10 @@ Biblioteca Vetor - biblioteca que comportará as funções que serão responsáv
 
 	Função expandirVetor:
 		Função que receberá o ponteiro do vetor atual, e a quantidade de vezes que o vetor foi expandido.
-		Criará um novo vetor de tamanho igual ao tamanho do vetor antigo mais 2 elevado a quantidade de vezes que o vetor foi exapndido
+		Criará um novo vetor de tamanho igual ao tamanho do vetor antigo mais 2 elevado a quantidade de vezes que o vetor foi exapndido.
+		
+	Função primeiraMaiuscula:
+		Função que receberá o ponteiro de uma string e transformará a primeira letra da string em maiúscula e o restante minúscula.
 
 
 
@@ -51,13 +54,13 @@ Biblioteca Pedidos - biblioteca que comportará funções para tratar os pedidos
 		Função que receberá o nome do arquivo a ser lido, e criará um vetor dinâmico de tamanho igual a quantidade de produtos no pedido. 
 		Retorna um ponteiro que aponta ao vetor dinâmico.
 
-	Função checarEstoque:
-		Função que receberá o ponteiro do vetor do pedido e o ponteiro do vetor do estoque, e que vai testar se todos os produtos no estoque são o bastante para fornecer o pedido.
-		Caso sim, chamará a função gerarNota, caso contrário, exibirá que o pedido falhhou e quais produtos causaram a falha.
-
 	Função gerarNota:
 		Função que receberá o ponteiro do vetor do pedido, e ponteiro do vetor do estoque, 
 		Irá debitar os produtos do estoque, calcular o preço de cada produto, e o preço total, considerando o desconto de 10% para compras acima de 1000 reais.
+
+	Função checarEstoque:
+		Função que receberá o ponteiro do vetor do pedido e o ponteiro do vetor do estoque, e que vai testar se todos os produtos no estoque são o bastante para fornecer o pedido.
+		Caso sim, chamará a função gerarNota, caso contrário, exibirá que o pedido falhhou e quais produtos causaram a falha.
 
 
 

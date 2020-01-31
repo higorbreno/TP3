@@ -14,7 +14,7 @@ void formatarNome(char* nome) {
 	}
 	int i = 1;
 	while (nome[i] != '\0') {
-		nome[i] = tolower(nome[i++]);
+		nome[i++] = tolower(nome[i]);
 	}
 }
 

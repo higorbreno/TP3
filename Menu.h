@@ -5,15 +5,15 @@
 
 struct estoque {
 	char nome[20];
-	float quantidade;
 	float preco;
-	bool existe = true;
+	unsigned quantidade;
 };
 
 void receberEstoque();
+void Menu();
 int Adicionar(int);
 void Excluir();
 void Listar();
-
+void Sair();
 
 #endif

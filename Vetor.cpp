@@ -32,5 +32,6 @@ int expandirVetor(int n) {
 	for (int i = 0; i < tamanhoAntigo; ++i) {
 		vetor[i] = temp[i];
 	}
+	delete[] temp;
 	return n;
 }

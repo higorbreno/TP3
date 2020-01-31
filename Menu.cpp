@@ -47,9 +47,9 @@ void Menu() {
 	}
 }
 
-void receberEstoque() {
+char* receberEstoque() {
 	cout << "Digite o nome do arquivo do estoque: ";
-	char arquivo[50];
+	static char arquivo[50];
 	cin.getline(arquivo, 50);
 
 	ifstream fin;
@@ -73,48 +73,45 @@ void receberEstoque() {
 
 		fin.close();
 	}
+	return arquivo;
 }
 
 int Adicionar(int n) {
 	system("cls");
 	system("chcp 1252 > nul");
+
+	estoque produto;
+
 	cout << "Adicionar\n";
 	cout << "---------\n";
 	cout << "Produto: ";
-	char produto[20];
-	cin.getline(produto, 20);
-	formatarNome(produto);
+	cin.ignore();
+	cin.getline(produto.nome, 20);
+	formatarNome(produto.nome);
 	cout << "Preço: ";
-	float preco;
-	cin >> preco;
+	cin >> produto.preco;
 	cout << "Quantidade: ";
-	float quantidade;
-	cin >> quantidade;
+	cin >> produto.quantidade;
 
 	bool diferente = true;
-	for (int i = 0; i < tamanhoVetor && diferente; ++i) {
-		diferente = !strcmp(vetor[i].nome, produto);
+	for (int i = 0; i < tamanhoUsado && diferente; ++i) {
+		diferente = strcmp(vetor[i].nome, produto.nome);
 		if (!diferente) {
-			vetor[i].preco = preco;
-			vetor[i].quantidade += quantidade;
+			vetor[i].preco = produto.preco;
+			vetor[i].quantidade += produto.quantidade;
 			return n;
 		}
 	}
 	
 	if (tamanhoUsado < tamanhoVetor) {
-		strcpy_s(vetor[++tamanhoUsado].nome, produto);
-		vetor[tamanhoUsado].preco = preco;
-		vetor[tamanhoUsado].quantidade = quantidade;
+		vetor[tamanhoUsado++] = produto;
 		return n;
 	}
-	
 
 	int indice = tamanhoVetor;
 	n = expandirVetor(n);
 
-	strcpy_s(vetor[indice].nome, produto);
-	vetor[indice].preco = preco;
-	vetor[indice].quantidade = quantidade;
+	vetor[tamanhoUsado++] = produto;
 	return n;
 }
 
@@ -160,7 +157,14 @@ void Listar() {
 	system("pause");
 }
 
-void Sair() {
+void Sair(char* arquivo) {
+	ofstream fout;
+
+	fout.open(arquivo);
+	
+
+
+	fout.close();
 
 	exit(EXIT_SUCCESS);
 }

@@ -9,11 +9,11 @@ struct estoque {
 	unsigned quantidade;
 };
 
-void receberEstoque();
+char* receberEstoque();
 void Menu();
 int Adicionar(int);
 void Excluir();
 void Listar();
-void Sair();
+void Sair(char*);
 
 #endif

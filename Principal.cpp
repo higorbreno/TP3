@@ -3,8 +3,9 @@
 using namespace std;
 
 int main() {
-	receberEstoque();
-	Menu();
+	char arquivo[50];
+	strcpy_s(arquivo, receberEstoque());
+	Menu(arquivo);
 
 	return 0;
 }

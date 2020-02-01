@@ -3,14 +3,16 @@
 #include <cctype>
 #include "Menu.h"
 #include "Vetor.h"
+#include "Pedidos.h"
 using namespace std;
 
 estoque* vetor;
 int tamanhoVetor;
 int tamanhoUsado;
 
-void Menu() {
-	while (true) {
+void Menu(char* arquivo) {
+	bool condicao = true;
+	while (condicao) {
 		system("cls");
 		cout << "Sistema de Controle\n"
 			<< "===================\n"
@@ -29,7 +31,7 @@ void Menu() {
 
 		switch (toupper(ch)) {
 		case 'P':
-			//Pedir();
+			Pedir();
 			break;
 		case 'A':
 			n = Adicionar(n);
@@ -41,7 +43,7 @@ void Menu() {
 			Listar();
 			break;
 		case 'S':
-			Sair();
+			condicao = !Sair(arquivo);
 			break;
 		}
 	}
@@ -54,7 +56,7 @@ char* receberEstoque() {
 
 	ifstream fin;
 
-	fin.open(arquivo);
+	fin.open(arquivo, ios_base::binary);
 	if (!fin.is_open()) {
 		vetor = new estoque[0];
 	}
@@ -74,6 +76,18 @@ char* receberEstoque() {
 		fin.close();
 	}
 	return arquivo;
+}
+
+void Pedir() {
+	system("cls");
+	char arquivo[50];
+	cout << "Pedir\n";
+	cout << "-----\n";
+	cout << "Arquivo: ";
+	cin.ignore();
+	cin.getline(arquivo, 50);
+
+	lerPedido(arquivo);
 }
 
 int Adicionar(int n) {
@@ -157,14 +171,18 @@ void Listar() {
 	system("pause");
 }
 
-void Sair(char* arquivo) {
+bool Sair(char* arquivo) {
 	ofstream fout;
 
-	fout.open(arquivo);
+	fout.open(arquivo, ios::binary);
 	
+	fout.write((char*) &tamanhoUsado, sizeof(int));
 
+	for (int i = 0; i < tamanhoUsado; ++i) {
+		fout.write((char*)& vetor[i], sizeof(estoque));
+	}
 
 	fout.close();
 
-	exit(EXIT_SUCCESS);
+	return true;
 }

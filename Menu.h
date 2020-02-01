@@ -6,14 +6,15 @@
 struct estoque {
 	char nome[20];
 	float preco;
-	unsigned quantidade;
+	int quantidade;
 };
 
 char* receberEstoque();
-void Menu();
+void Menu(char*);
+void Pedir();
 int Adicionar(int);
 void Excluir();
 void Listar();
-void Sair(char*);
+bool Sair(char*);
 
 #endif

@@ -1,4 +1,4 @@
-
+// Arquivo .h que contém a definição do registro estoque e as funções da biblioteca Menu.h
 
 #ifndef MENU
 #define MENU

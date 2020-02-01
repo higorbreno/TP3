@@ -10,10 +10,18 @@ using namespace std;
 extern estoque* vetor;
 extern int tamanhoUsado;
 
+
+//Função para ler o arquivo do pedido
 void lerPedido(char* arquivo) {
 	ifstream fin;
 
+	
 	fin.open(arquivo);
+	while (!fin.is_open()) {
+		cout << "Arquivo inválido!\nPor favor, digite novamente: ";
+		cin >> arquivo;
+		fin.open(arquivo);
+	}
 
 	char empresa[50];
 	fin.getline(empresa, 50);
@@ -24,11 +32,13 @@ void lerPedido(char* arquivo) {
 
 	bool primeiraFalha = false;
 
+	//Cria uma variável do tipo pedido e um vetor dinâmico do tamanho da quantidade de produtos existentes no estoque
 	pedido Pedido;
 	pedido* pedidos = new pedido[tamanhoUsado];
 	int quantidadePedidos = 0;
 	int i = 0;
 
+	//Pega os pedidos e junta os pedidos do mesmo produto
 	do {
 		fin >> Pedido.nome;
 		formatarNome(Pedido.nome);
@@ -48,7 +58,8 @@ void lerPedido(char* arquivo) {
 	} while (!fin.eof());
 
 	int falhas = 0;
-
+	
+	//Checa se os pedidos são possíveis e mostra os produtos que falharam
 	for (int j = 0; j < i; ++j) {
 		Pedido = pedidos[j];
 		int quantidadeFalta = checarEstoque(Pedido);
@@ -78,6 +89,8 @@ void lerPedido(char* arquivo) {
 	fin.close();
 }
 
+
+//Função que checa se a quantidade disponível de um certo produto é suficiente para a quantidade solicitada
 int checarEstoque(pedido pedido) {
 	bool achou = false;
 	for (int i = 0; i < tamanhoUsado && !achou; ++i) {
@@ -91,7 +104,10 @@ int checarEstoque(pedido pedido) {
 	return 0;
 }
 
+
+//Função para gerar uma nota fiscal com o valor total
 void gerarNota(char* arquivo, char* empresa, pedido* pedidos, int quantidade) {
+	//Muda a extensão do arquivo para .nfc
 	int indice = strlen(strtok(arquivo, ".")) + 1;
 	arquivo[indice++] = 'n';
 	arquivo[indice++] = 'f';
@@ -99,8 +115,11 @@ void gerarNota(char* arquivo, char* empresa, pedido* pedidos, int quantidade) {
 
 	ofstream fout;
 
+	//Abre/Cria o arquivo
 	fout.open(arquivo);
 
+
+	//Escreve o nome da empresa, a quantidade, o valor do pedido de produtos individuais e o valor da compra total
 	fout << empresa << endl;
 	fout << "--------------------------------------\n";
 	fout.setf(ios_base::fixed, ios_base::floatfield);
@@ -118,6 +137,8 @@ void gerarNota(char* arquivo, char* empresa, pedido* pedidos, int quantidade) {
 	}
 	fout << "--------------------------------------\n";
 	fout << "Compra = R$" << precoTotal << endl;
+
+	//Aplica o desconto caso elegível
 	float desconto = 0;
 	if (precoTotal > 1000) {
 		desconto = precoTotal / 10;

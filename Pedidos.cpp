@@ -140,7 +140,7 @@ void gerarNota(char* arquivo, char* empresa, pedido* pedidos, int quantidade) {
 
 	//Aplica o desconto caso elegível
 	float desconto = 0;
-	if (precoTotal > 1000) {
+	if (precoTotal >= 1000) {
 		desconto = precoTotal / 10;
 	}
 	fout << "Desconto = R$" << desconto << endl;

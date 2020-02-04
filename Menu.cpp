@@ -5,13 +5,14 @@
 #include "Vetor.h"
 #include "Pedidos.h"
 using namespace std;
+const char estoq[] = "estoque.bin";
 
 estoque* vetor;
 int tamanhoVetor;
 int tamanhoUsado;
 
 //Função que mostra o menu principal e chama a função referente a opção desejada
-void Menu(char* arquivo) {
+void Menu() {
 	bool condicao = true;
 	while (condicao) {
 		system("cls");
@@ -44,7 +45,7 @@ void Menu(char* arquivo) {
 			Listar();
 			break;
 		case 'S':
-			condicao = !Sair(arquivo);
+			condicao = !Sair();
 			break;
 		}
 	}
@@ -52,14 +53,11 @@ void Menu(char* arquivo) {
 
 
 //Função que pede um arquivo binário que contém o estoque inicial e guarda os produtos em um vetor dinâmico de tamanho igual a quantidade de produtos
-char* receberEstoque() {
-	cout << "Digite o nome do arquivo do estoque: ";
-	static char arquivo[50];
-	cin.getline(arquivo, 50);
+void receberEstoque() {
 
 	ifstream fin;
 
-	fin.open(arquivo, ios_base::binary);
+	fin.open(estoq, ios_base::binary);
 	if (!fin.is_open()) {
 		//Caso o arquivo não abra cria um vetor dinâmico vazio
 		vetor = new estoque[0];
@@ -80,7 +78,6 @@ char* receberEstoque() {
 
 		fin.close();
 	}
-	return arquivo;
 }
 
 
@@ -190,10 +187,10 @@ void Listar() {
 
 
 //Função que guarda os valores do vetor dinâmico no arquivo binário do estoque e sai do programa
-bool Sair(char* arquivo) {
+bool Sair() {
 	ofstream fout;
 
-	fout.open(arquivo, ios::binary);
+	fout.open(estoq, ios_base::binary);
 	
 	fout.write((char*) &tamanhoUsado, sizeof(int));
 

@@ -5,7 +5,7 @@
 
 struct pedido {
 	char nome[20];
-	float quantidade;
+	int quantidade;
 };
 
 void lerPedido(char*);

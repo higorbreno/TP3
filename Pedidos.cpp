@@ -15,7 +15,8 @@ extern int tamanhoUsado;
 void lerPedido(char* arquivo) {
 	ifstream fin;
 
-	
+	int quantPedidos = 0;
+
 	fin.open(arquivo);
 	while (!fin.is_open()) {
 		cout << "Arquivo inválido!\nPor favor, digite novamente: ";
@@ -30,11 +31,26 @@ void lerPedido(char* arquivo) {
 		fin.get(ch);
 	} while (ch != '\n');
 
+	do {
+		fin.get(ch);
+		if (ch == '\n') {
+			++quantPedidos;
+		}
+	} while (!fin.eof());
+	fin.close();
+
+	
+	fin.open(arquivo);
+	fin.getline(empresa, 50);
+	do {
+		fin.get(ch);
+	} while (ch != '\n');
+
 	bool primeiraFalha = false;
 
 	//Cria uma variável do tipo pedido e um vetor dinâmico do tamanho da quantidade de produtos existentes no estoque
 	pedido Pedido;
-	pedido* pedidos = new pedido[tamanhoUsado];
+	pedido* pedidos = new pedido[quantPedidos];
 	int quantidadePedidos = 0;
 	int i = 0;
 
@@ -62,11 +78,27 @@ void lerPedido(char* arquivo) {
 	//Checa se os pedidos são possíveis e mostra os produtos que falharam
 	for (int j = 0; j < i; ++j) {
 		Pedido = pedidos[j];
-		int quantidadeFalta = checarEstoque(Pedido);
 
-		
+		int quantidadeFalta = 0;
 
-		if (quantidadeFalta && !primeiraFalha) {
+		bool achou = false;
+		for (int k = 0; k < tamanhoUsado && !achou; ++k) {
+			if (!strcmp(Pedido.nome, vetor[k].nome)) {
+				achou = true;
+			}
+		}
+
+		quantidadeFalta = checarEstoque(Pedido);
+
+		if (!achou && !primeiraFalha) {
+			primeiraFalha = true;
+			cout << "\nPedido falhou!\n";
+			cout << Pedido.nome << ": Solicitado = " << Pedido.quantidade << "kg / Em estoque = Não existente\n";
+		}
+		else if (!achou) {
+			cout << Pedido.nome << ": Solicitado = " << Pedido.quantidade << "kg / Em estoque = Não existente\n";
+		}
+		else if (quantidadeFalta && !primeiraFalha) {
 			primeiraFalha = true;
 			cout << "\nPedido falhou!\n";
 			cout << Pedido.nome << ": Solicitado = " << Pedido.quantidade << "kg / Em estoque = " << Pedido.quantidade - quantidadeFalta << "kg\n";

@@ -140,7 +140,7 @@ int checarEstoque(pedido pedido) {
 //Função para gerar uma nota fiscal com o valor total
 void gerarNota(char* arquivo, char* empresa, pedido* pedidos, int quantidade) {
 	//Muda a extensão do arquivo para .nfc
-	int indice = strlen(strtok(arquivo, ".")) + 1;
+	int indice = strlen(arquivo) - 3;
 	arquivo[indice++] = 'n';
 	arquivo[indice++] = 'f';
 	arquivo[indice] = 'c';

@@ -1,6 +1,8 @@
-=======
-PROJETO
-=======
+# TP3
+
+Sistema de gerência de pizzaria
+
+Pizzeria's management system
 
 O objetivo do projeto é criar um sistema de pedidos de produtos.
 O programa pedirá o nome de um arquivo binário no começo do programa que estará guardado os produtos disponíveis no estoque.
